@@ -2,7 +2,7 @@
 2021년도 2학기 팀프로젝트
 # 개발 목적
 ## 학생
-보기 쉽게 이번 주에 해야할 일을 정리
+이번 주에 해야할 일을 보기 쉽게 정리
 - **현재 학기 수강 과목 배치**
 - **과제 목록과 데드라인**
 - **수업의 출석 마감일 보여주기**
@@ -13,15 +13,14 @@
 - **추가 문제 사항 파악하기**
 
 ## 조직원 역할
-강동형 : 프론트엔드 & 백엔드 개발, Zoom 회의 총괄
 
-류영준 : 백엔드 개발, 노션 관리
-
-임철수 : 프론트엔드 개발, 깃허브 관리
-
-이대현 : 프론트엔드 개발, UI 설계
-
-최성수 : 백엔드 개발, UI 설계
+Table|프론트엔드 개발|백엔드 개발|UI 설계|노션 관리|깃허브 관리|Zoom 회의 총괄
+---|---|---|---|---|---|---
+강동형|O|O| | | |O
+류영준| |O| |O| |
+임철수|O| | | |O|
+이대현|O| |O| | |
+최성수| |O|O| | |
 
 # 개발 언어
 ## Front-end
@@ -31,4 +30,4 @@
 - NodeJs
 - Database
 
-[![Notion](https://img.shields.io/badge/SETeam-Notion-blue?style=social&logo=Notion)](https://google.co.kr)
+[![Notion](https://img.shields.io/badge/SETeam-Notion-blue?style=social&logo=Notion "프로젝트 진행상황 보기")](https://google.co.kr)
