@@ -31,4 +31,4 @@ Table|프론트엔드 개발|백엔드 개발|UI 설계|노션 관리|깃허브 
 - Database
 
 [![Zoom](https://img.shields.io/badge/SETeam-Zoom-blue?style=social&logo=Zoom "회의 장소")](https://zoom.us)
-[![Notion](https://img.shields.io/badge/SETeam-Notion-blue?style=social&logo=Notion "프로젝트 진행상황 보기")](https://google.co.kr)
+[![Notion](https://img.shields.io/badge/SETeam-Notion-blue?style=social&logo=Notion "프로젝트 진행상황 보기")](https://www.notion.so/6-d6aed0a3dd1d4287ba82d00429db140a)
