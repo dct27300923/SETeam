@@ -1,0 +1,23 @@
+.outline
+{
+    width: 100%;
+    height: 80px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid black; */
+}
+
+.outline a
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 50px;
+    background-color: #F1C40F;
+    border: 1px solid black;
+    font-size: 1em;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+}
