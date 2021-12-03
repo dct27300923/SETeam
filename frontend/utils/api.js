@@ -62,30 +62,6 @@ export class BookmarkResponse {
 	content;
 }
 
-export class API {
-  constructor(url) {
-	this.url = url;
-  }
-
-  get(url) {
-	return fetch(this.url + url)
-	  .then(response => response.json())
-	  .catch(error => console.log(error));
-  }
-
-  post(url, data) {
-	return fetch(this.url + url, {
-	  method: 'POST',
-	  headers: {
-		'Content-Type': 'application/json'
-	  },
-	  body: JSON.stringify(data)
-	})
-	  .then(response => response.json())
-	  .catch(error => console.log(error));
-  }
-}
-
 /*
   dummay data for test
 */
@@ -143,4 +119,38 @@ export const dummyAssignment = {
 	content: "안녕하세요",
 	lectureInfo: dummyLectureInfo,
 	deadline_at: new Date()
+}
+
+export class API {
+	constructor(token = null) {
+	  this.url = 'http://13.125.246.198';
+	  if(window) {
+		this.token = window.localStorage.getItem('token');
+	  } else {
+		this.token = token;
+	  }
+	}
+  
+	get(url) {
+	  return fetch(this.url + url, {
+		  headers: {
+			  'x-access-token': this.token
+		  }
+	  })
+		.then(response => response.json())
+		.catch(error => console.log(error));
+	}
+  
+	post(url, data) {
+	  return fetch(this.url + url, {
+		method: 'POST',
+		headers: {
+		  'Content-Type': 'application/json',
+		  'x-access-token': this.token
+		},
+		body: JSON.stringify(data)
+	  })
+		.then(response => response.json())
+		.catch(error => console.log(error));
+	}
 }
