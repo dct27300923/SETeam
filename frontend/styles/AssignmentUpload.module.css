@@ -1,0 +1,100 @@
+html,body{
+  margin: 0;
+  padding: 0;
+}
+
+#assignmentHeader{
+  height: 50px;
+  background-color: #031765;
+  color:white;
+  border-bottom:1px solid #1b1b1b;
+}
+
+#assignmentMain{
+  background:white;
+  min-height:700px;
+  text-align:center;
+
+}
+
+#assignmentFooter{
+  height:80px;
+  margin-top:-16px;
+  background-color: #f7f7f7;
+
+}
+
+.mainWrap{
+  display:inline-block;
+  width:70%;
+  height:835px;
+  background-color: white;
+  border-left:1px solid black;
+  border-right:1px solid black;
+}
+
+h1{
+  font-size: 25px;
+  
+}
+
+.titleBox{
+  width:70%;
+  height:50px;
+  resize:none;
+  margin-top:15px;
+}
+
+
+.descriptionBox{
+  margin-top: 40px;
+  width:70%;
+  height:400px;
+  resize:none;
+}
+
+.fileUpload{
+  margin-top:50px;
+}
+
+
+.footerWrap{
+  position: relative;
+  width:1080px;
+  height:100%;
+  margin:0 auto;
+
+}
+
+.policy{
+  color:#666;
+}
+
+.footerWrap ul.policy li{
+  float:left;
+  padding:15px 10px 5px 10px;
+  list-style:none;
+  font-size: 12px;
+}
+
+.footerWrap p.copyright{
+  display:inline-block;
+  font-size: 13px;
+  color:#666;
+  margin:10px 10px;
+  font-size: 14px;
+  margin-left: 50px;
+}
+
+a:visited{
+  color:#666;
+}
+
+.uploadButton{
+  color: white;
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 6px;
+  font-size:14px;
+  margin-top: 30px;
+}
