@@ -1,5 +1,5 @@
 import style from './AssignmentUpload.module.css';
-import uosSymbol from './icon/ci_m.png';
+import uosSymbol from './style/ci_m.png';
 import {useState} from 'react';
 import Axios from 'axios';
 
