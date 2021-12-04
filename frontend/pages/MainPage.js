@@ -1,6 +1,7 @@
-import Header from "../components/Header"
-import Footer from "../components/Footer"
-import MainComponent from "../components/MainPage/MainComponent.js"
+import MainComponent from "../components/MainPage/MainComponent.js";
+import Layout from "../components/Layout";
+import Link from 'next/link';
+import { css, jsx }from '@emotion/react';
 
 function getLectureInfoFromDB(userID)
 {
@@ -43,12 +44,10 @@ function getLectureInfoFromDB(userID)
 export default function MainPage()
 {
     return (
-        <>
-            <Header></Header>
+        <Layout>
             <MainComponent 
                 userID="2017920055" 
                 lectureInfo={getLectureInfoFromDB("2017920055")}/>
-            <Footer></Footer>
-        </>
+        </Layout>
     );
 }

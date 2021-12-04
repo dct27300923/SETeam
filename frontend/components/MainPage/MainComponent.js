@@ -50,12 +50,12 @@ function MainComponent(props)
 
     let mainPage = 
     <>
-    <p style={{
-        padding: "20px 0px"
-    }}>수강 과목</p>
-    <div className={styles.lectureList}>
-        {lectureList}
-    </div>
+        <p style={{
+            padding: "20px 0px"
+        }}>수강 과목</p>
+        <div className={styles.lectureList}>
+            {lectureList}
+        </div>
     </>;
     return (
         <ContainerComponent content={mainPage} />
