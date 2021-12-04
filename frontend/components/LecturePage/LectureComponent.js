@@ -81,7 +81,7 @@ function LectureComponent(props)
     // mainWeek
     let mainContainer;
     let mainTitle = <div className={styles.mainTitle}>
-        <p>이번주 강의</p>
+        이번주 강의
     </div>
     let mainLectureContainer;
     let mainLectures = [];
@@ -109,7 +109,7 @@ function LectureComponent(props)
     // Attendance
     let attendanceContainer;
     let attendanceTitle = <div className={styles.attendTitle}>
-        <p>출석 현황</p>
+        출석 현황
     </div>
     let attendanceComponents = []
     for (let i=0; i<16; i++)
@@ -175,7 +175,7 @@ function LectureComponent(props)
 
     if (bookmarks.length == 0)
     {
-        let emptyComponent = <div className={styles.noBookmark}>아직 북마크가 없습니다.</div>;
+        let emptyComponent = <div className={styles.noBookmark}>북마크가 없습니다.</div>;
         bookmarkComponents.push(emptyComponent);
     }
     for (let i=0; i<bookmarks.length; i++)
@@ -234,11 +234,7 @@ function LectureComponent(props)
         </>;
     }
     return (
-        <>
-            <Header></Header>
-            <ContainerComponent content={Page}/>
-            <Footer></Footer>
-        </>
+        <ContainerComponent content={Page}/>
     );
 }
 

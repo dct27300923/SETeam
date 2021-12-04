@@ -9,12 +9,18 @@
 .lectureList .content
 {
     padding: 30px 50px;
+    color : black;
     background-color: #fff;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid rgba(33,33,33,0.8);
+}
+
+.lectureList a
+{
+    text-decoration: none;
 }
 
 .lectureList .content .status

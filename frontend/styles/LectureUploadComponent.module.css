@@ -1,0 +1,36 @@
+.outline
+{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+}
+
+.title
+{
+    width: 100%;
+    height: 50px;
+    font-size: 1em;
+    padding-left: 20px
+}
+
+.fileBtn
+{
+    font-size: 12px;
+}
+
+.buttons
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.buttons .addBtn, .buttons .uploadBtn
+{
+    padding: 10px 30px;
+    color: #fff;
+    background-color: #031765;
+    border-radius: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
