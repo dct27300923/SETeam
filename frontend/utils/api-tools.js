@@ -1,5 +1,5 @@
 import { API } from "./api"
-import { getToken, setToken, validate } from "./token";
+import { getToken, setToken, validate, decode } from "./token";
 
 export const login = async (id, password) => {
 	try {

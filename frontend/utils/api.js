@@ -142,13 +142,25 @@ export class API {
 	}
   
 	post(url, data, isFormData = false) {
+	  let body = JSON.stringify(data);
+	  if(isFormData) {
+		let fd = new FormData();
+		Object.keys(data).forEach(key => {
+			fd.append(key, data[key]);
+		});
+		body = fd;
+	  }
+
+	  const headers = {
+		  'x-access-token': this.token
+	  }
+	  if(!isFormData) {
+		headers['Content-Type'] = 'application/json';
+	  }
 	  return fetch(this.url + url, {
 		method: 'POST',
-		headers: {
-		  'Content-Type': isFormData ?  'multipart/form-data' : 'application/json',
-		  'x-access-token': this.token
-		},
-		body: JSON.stringify(data)
+		headers,
+		body: body,
 	  })
 		.then(response => response.json())
 		.catch(error => console.log(error));
