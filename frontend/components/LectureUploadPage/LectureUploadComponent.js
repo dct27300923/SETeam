@@ -1,5 +1,6 @@
 import ContainerComponent from "../ContainerComponent";
 import styles from "../../styles/LectureUploadComponent.module.css";
+import {uploadLecture} from "../../utils/api-tools";
 import {useState} from 'react';
 
 function uploadLectureToDB(week, title, file)
@@ -7,14 +8,24 @@ function uploadLectureToDB(week, title, file)
 
 }
 
+function onFileUpload(event)
+{
+    event.preventDefault();
+    let file = event.target.files[0];
+    let formData = new FormData();
+    formData.append('video', file);
+    uploadLecture(1, formData, "Hello");
+}
+
+
 export default function LectureUploadComponent()
 {
     let outline = <div className={styles.outline}>강의 업로드</div>
     
     let [uploadList, setUploadList] = useState([]);
     let title = <input type="text" placeholder="Title" 
-        className={styles.title}></input>
-    let file = <input type="file" className={styles.fileBtn}></input>
+        id="title" className={styles.title}></input>
+    let file = <input type="file" id="fileBtn" className={styles.fileBtn}></input>
 
     let buttons;
     let uploadedFile;
@@ -22,11 +33,12 @@ export default function LectureUploadComponent()
         uploadList.push(<div>
             {title}
             {file}
-        </div>);
+        </div>); 
         uploadList = uploadList.slice();
         setUploadList(uploadList);
     }.bind(this)}>추가</button>
-    let uploadBtn = <button className={styles.uploadBtn} onClick={function(e){
+    let uploadBtn = <button className={styles.uploadBtn} 
+    onClick={function(e){
         let s = document.getElementById("week");
         // 몇주차 강의인지
         let week = s.options[s.selectedIndex].value;
@@ -35,11 +47,11 @@ export default function LectureUploadComponent()
         for (let i=0; i<count; i++)
         {
             // 타이틀
+            //title = document.getElementById("title")[i].value;
             title = document.getElementsByClassName("LectureUploadComponent_title__4v82a")[i].value;
             // mp4 정보
-            uploadedFile = document.getElementsByClassName("LectureUploadComponent_fileBtn__QOWrk")[i].files;
-            alert(uploadedFile[0]);
-            //uploadLectureToDB(week, title, )
+            uploadedFile = document.getElementsByClassName("LectureUploadComponent_fileBtn__QOWrk")[i].files[0];
+            uploadLecture(parseInt(week), uploadedFile, title);
         }
         //alert(week);
         //alert(count);

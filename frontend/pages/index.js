@@ -46,6 +46,45 @@ function getLectureInfoFromDB(userID)
 }
 
 
+// export default function MainPage()
+// {
+//     const router = useRouter();
+//     const [userId, setUserId] = useState('');
+//     const [lectureInfo, setLectureInfo] = useState([]);
+//     useEffect(() => {
+//         if(!window) return;
+//         const token = decode(getToken());
+//         if(!token) {
+//             alert("Forbidden Resource.");
+//             router.push("/login");
+//             return;
+//         }
+//         const { email, userId } = token;
+//         if(userId) setUserId(userId);
+//         new API().get(`/main/${userId}`)
+//         .then((res) => {
+//             //console.log(res);
+//             setLectureInfo(res.result);
+//             //alert(JSON.stringify(res.result));
+//         })
+//         .catch((err) => {
+//             console.error(err);
+//         })
+//     }, []);
+
+//     return (
+//         <Layout>
+//             <MainComponent 
+//                 userID={userId} 
+//                 lectureInfo={lectureInfo}/>
+                    
+//                 {/* getLectureInfoFromDB("2017920055")}/> */}
+//         </Layout>
+//     );
+// }
+
+
+
 export default function MainPage()
 {
     const router = useRouter();
@@ -56,7 +95,7 @@ export default function MainPage()
         if(!window) return;
         getMainData()
         .then((res) => {
-            setLectureInfo(res.data);
+            setLectureInfo(res);
         })
         .catch((err) => {
             console.log(err);
@@ -67,7 +106,9 @@ export default function MainPage()
         <Layout>
             <MainComponent 
                 userID={userId} 
-                lectureInfo={getLectureInfoFromDB("2017920055")}/>
+                lectureInfo={lectureInfo
+                    // getLectureInfoFromDB(userId)
+                    }/>
         </Layout>
     );
 }

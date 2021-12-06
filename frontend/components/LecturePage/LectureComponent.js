@@ -3,55 +3,55 @@ import ContainerComponent from "../ContainerComponent.js";
 import styles from "../../styles/LectureComponent.module.css";
 import {useState} from 'react';
 
-function getLectureListFromDB(userID, subject)
-{
-    return [
-        //1주차
-        [
-            ["강의1", "example.txt"],
-            ["강의2", "example2.txt"]
-        ],
-        //2주차
-        [
-            ["강의3", "example.txt"],
-            ["강의4", "example2.txt"]
-        ],
-        //3주차
-        [
-            ["강의5", "example.txt"],
-            ["강의6", "example2.txt"]
-        ],
-        //4주차
-        [
-            ["강의7", "example.txt"],
-            ["강의8", "example2.txt"]
-        ],
-    ];
-}
+// function getLectureListFromDB(userID, subject)
+// {
+//     return [
+//         //1주차
+//         [
+//             ["강의1", "example.txt"],
+//             ["강의2", "example2.txt"]
+//         ],
+//         //2주차
+//         [
+//             ["강의3", "example.txt"],
+//             ["강의4", "example2.txt"]
+//         ],
+//         //3주차
+//         [
+//             ["강의5", "example.txt"],
+//             ["강의6", "example2.txt"]
+//         ],
+//         //4주차
+//         [
+//             ["강의7", "example.txt"],
+//             ["강의8", "example2.txt"]
+//         ],
+//     ];
+// }
 
-function getAttendanceStatusFromDB(userID, subject)
-{
-    // 0: None, 1: 출석, 2: 지각, 3: 결석
-    return [1,1,2,1,3,1,1,1,2,1,1,1,0,0,0,0];
-}
+// function getAttendanceStatusFromDB(userID, subject)
+// {
+//     // 0: None, 1: 출석, 2: 지각, 3: 결석
+//     return [1,1,2,1,3,1,1,1,2,1,1,1,0,0,0,0];
+// }
 
-function getBookmarkFromDB(userID, subject)
-{
-    return [
-        {
-            "title": "title1...",
-            "description": "description1..."
-        },
-        {
-            "title": "title2...",
-            "description": "description2..."
-        },
-        {
-            "title": "title3...",
-            "description": "description3..."
-        },
-    ]
-}
+// function getBookmarkFromDB(userID, subject)
+// {
+//     return [
+//         {
+//             "title": "title1...",
+//             "description": "description1..."
+//         },
+//         {
+//             "title": "title2...",
+//             "description": "description2..."
+//         },
+//         {
+//             "title": "title3...",
+//             "description": "description3..."
+//         },
+//     ]
+// }
 
 // TODO: userID, subject, title로 데이터베이스 접근해서 삭제하기.
 //      currentBookmark 인자로 받는거 없애기.
@@ -76,9 +76,9 @@ function deleteBookmarkFromDB(userID, subject, currentBookmark,title)
 
 function LectureComponent(props)
 {
-    const lectureListFromDB = getLectureListFromDB(props.userID, props.subject);
-    const attendanceStatusFromDB = getAttendanceStatusFromDB(props.userID, props.subject);
-    let [bookmarks, setBookmarks] = useState(getBookmarkFromDB(props.userID, props.subject));
+    const lectureListFromDB = props.lectureList;//getLectureListFromDB(props.userID, props.subject);
+    const attendanceStatusFromDB = props.attendanceStatus;//getAttendanceStatusFromDB(props.userID, props.subject);
+    let [bookmarks, setBookmarks] = useState(props.bookmark);//getBookmarkFromDB(props.userID, props.subject));
     let [mode, SetMode] = useState("lecture");
     // mainWeek
     let mainContainer;
