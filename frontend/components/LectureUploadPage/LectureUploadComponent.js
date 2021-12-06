@@ -17,6 +17,7 @@ export default function LectureUploadComponent()
     let file = <input type="file" className={styles.fileBtn}></input>
 
     let buttons;
+    let uploadedFile;
     let addBtn = <button className={styles.addBtn} onClick={function(e){
         uploadList.push(<div>
             {title}
@@ -27,11 +28,17 @@ export default function LectureUploadComponent()
     }.bind(this)}>추가</button>
     let uploadBtn = <button className={styles.uploadBtn} onClick={function(e){
         let s = document.getElementById("week");
+        // 몇주차 강의인지
         let week = s.options[s.selectedIndex].value;
+        // 영상 몇개를 넣을건지
         let count = document.getElementsByClassName("LectureUploadComponent_title__4v82a").length;
         for (let i=0; i<count; i++)
         {
+            // 타이틀
             title = document.getElementsByClassName("LectureUploadComponent_title__4v82a")[i].value;
+            // mp4 정보
+            uploadedFile = document.getElementsByClassName("LectureUploadComponent_fileBtn__QOWrk")[i].files;
+            alert(uploadedFile[0]);
             //uploadLectureToDB(week, title, )
         }
         //alert(week);

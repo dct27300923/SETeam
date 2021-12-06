@@ -1,5 +1,3 @@
-import Header from "../Header.js"
-import Footer from "../Footer.js"
 import OutlineComponent from "./OutlineComponent.js";
 import ContainerComponent from "../ContainerComponent.js";
 import styles from "../../styles/LectureComponent.module.css";
@@ -8,21 +6,25 @@ import {useState} from 'react';
 function getLectureListFromDB(userID, subject)
 {
     return [
+        //1주차
         [
-            ["강의1", "https://naver.com"],
-            ["강의2", "https://youtube.com"]
+            ["강의1", "example.txt"],
+            ["강의2", "example2.txt"]
         ],
+        //2주차
         [
-            ["강의1", "https://naver.com"],
-            ["강의2", "https://youtube.com"]
+            ["강의3", "example.txt"],
+            ["강의4", "example2.txt"]
         ],
+        //3주차
         [
-            ["강의1", "https://naver.com"],
-            ["강의2", "https://youtube.com"]
+            ["강의5", "example.txt"],
+            ["강의6", "example2.txt"]
         ],
+        //4주차
         [
-            ["강의1", "https://naver.com"],
-            ["강의2", "https://youtube.com"]
+            ["강의7", "example.txt"],
+            ["강의8", "example2.txt"]
         ],
     ];
 }
@@ -87,7 +89,7 @@ function LectureComponent(props)
     let mainLectures = [];
     for (let i=0; i < lectureListFromDB[0].length; i++)
     {
-        let lecture = <a href={lectureListFromDB[0][i][1]}>
+        let lecture = <a href="#" download={lectureListFromDB[0][i][1]}>
             {lectureListFromDB[0][i][0]}</a>
         mainLectures.push(lecture);
     }
@@ -95,7 +97,7 @@ function LectureComponent(props)
         {mainLectures}
     </div>
     let mainDescription = <div className={styles.description}>
-        <div className={styles.title}>12주차</div>
+        <div className={styles.title}>1주차</div>
         <div className={styles.lectures}>
             {mainLectureContainer}
         </div>
@@ -150,7 +152,7 @@ function LectureComponent(props)
 
         for(let i=0; i<lectureListFromDB[week].length; i++)
         {
-            let lecture = <a href={lectureListFromDB[week][i][1]}>
+            let lecture = <a href="#" download={lectureListFromDB[week][i][1]}>
                 {lectureListFromDB[week][i][0]}</a>
             lectureList.push(lecture);
         }

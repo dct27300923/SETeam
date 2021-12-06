@@ -9,7 +9,7 @@ function MainComponent(props)
 
     for (let i = 0; i < props.lectureInfo.length; i++)
     {
-        let name = <p className="subjectName">{props.lectureInfo[i]["과목"]}</p>;
+        let name = <p className="subjectName">{props.lectureInfo[i]["title"]}</p>;
         let status = <div className={styles.status}>
             <div className={styles.watched}>
                 <p>수강</p>
