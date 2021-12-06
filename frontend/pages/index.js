@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { API } from "../utils/api.js";
 import { useRouter } from "next/router";
 import { decode, getToken } from '../utils/token';
+import { getMainData } from "../utils/api-tools.js";
 
 function getLectureInfoFromDB(userID)
 {
@@ -53,22 +54,12 @@ export default function MainPage()
 
     useEffect(() => {
         if(!window) return;
-        const token = decode(getToken());
-        if(!token) {
-            alert("Forbidden Resource.");
-            router.push("/login");
-            return;
-        }
-        const { email, userId } = token;
-        if(userId) setUserId(userId);
-        new API().get(`/main/${userId}`)
+        getMainData()
         .then((res) => {
-            console.log(res);
-            setLectureInfo(res.result);
-            alert(JSON.stringify(res.result));
+            setLectureInfo(res.data);
         })
         .catch((err) => {
-            console.error(err);
+            console.log(err);
         })
     }, []);
 
