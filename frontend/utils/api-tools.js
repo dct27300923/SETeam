@@ -3,7 +3,7 @@ import { getToken, setToken, validate } from "./token";
 
 export const login = async (id, password) => {
 	try {
-		const res = new API().post("/login", {
+		const res = await new API().post("/login", {
 			email: id,
 			password: password
 		});
@@ -21,7 +21,7 @@ export const getMainData = async () => {
 
 	const { userId } = token;
 	try {
-		const res = new API().get(`/main/${userId}`);
+		const res = await new API().get(`/main/${userId}`);
 		return res.result;
 	} catch (e) {
 		console.error(e);
@@ -32,7 +32,7 @@ export const getMainData = async () => {
 export const uploadLecture = async (lectureInfoId, file, title) => {
 	if(!validate()) return;
 	try {
-		const res = new API().post(`/lecture/${lectureInfoId}`, {
+		const res = await new API().post(`/lecture/${lectureInfoId}`, {
 			video: file,
 			title: title
 		}, true);
@@ -46,7 +46,7 @@ export const uploadLecture = async (lectureInfoId, file, title) => {
 export const getLectureResource = async (lectureResourceId) => {
 	if(!validate()) return;
 	try {
-		const res = new API().get(`/lecture/${lectureResourceId}`);
+		const res = await new API().get(`/lecture/${lectureResourceId}`);
 		return res.result;
 	} catch (e) {
 		console.error(e);
@@ -57,7 +57,7 @@ export const getLectureResource = async (lectureResourceId) => {
 export const PatchLectureResource = async (lectureResourceId) => {
 	if(!validate()) return;
 	try {
-		const res = new API().patch(`/lecture/${lectureResourceId}`);
+		const res = await new API().patch(`/lecture/${lectureResourceId}`);
 		return res.result;
 	} catch (e) {
 		console.error(e);
@@ -68,7 +68,7 @@ export const PatchLectureResource = async (lectureResourceId) => {
 export const CreateBookmark = async (lectureResourceId, bookmarkSec, content) => {
 	if(!validate()) return;
 	try {
-		const res = new API().post(`/bookmark/${lectureResourceId}`, {
+		const res = await new API().post(`/bookmark/${lectureResourceId}`, {
 			bookmarkSec: bookmarkSec,
 			content: content
 		});
@@ -82,7 +82,7 @@ export const CreateBookmark = async (lectureResourceId, bookmarkSec, content) =>
 export const removeBookmark = async (bookmarkId) => {
 	if(!validate()) return;
 	try {
-		const res = new API().delete(`/bookmark/${bookmarkId}`);
+		const res = await new API().delete(`/bookmark/${bookmarkId}`);
 		return res.result;
 	} catch (e) {
 		console.error(e);
@@ -93,7 +93,7 @@ export const removeBookmark = async (bookmarkId) => {
 export const getLectureDetail = async (lectureId) => {
 	if(!validate()) return;
 	try {
-		const res = new API().get(`/lecture-detail/${lectureId}`);
+		const res = await new API().get(`/lecture-detail/${lectureId}`);
 		return res.result;
 	} catch (e) {
 		console.error(e);
@@ -104,7 +104,7 @@ export const getLectureDetail = async (lectureId) => {
 export const getBookmarkByLectureId = async (lectureId) => {
 	if(!validate()) return;
 	try {
-		const res = new API().get(`/bookmark/${lectureId}`);
+		const res = await new API().get(`/bookmark/${lectureId}`);
 		return res.result;
 	} catch (e) {
 		console.error(e);
