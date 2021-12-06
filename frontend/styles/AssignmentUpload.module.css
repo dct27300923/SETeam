@@ -1,13 +1,14 @@
-html,body{
-  margin: 0;
-  padding: 0;
-}
 
 #assignmentHeader{
+  background: url(./ci_m.png) no-repeat left center transparent;
   height: 50px;
   background-color: #031765;
   color:white;
   border-bottom:1px solid #1b1b1b;
+}
+
+.symbol{
+  background: url(./ci.png) no-repeat left center transparent;
 }
 
 #assignmentMain{
@@ -33,7 +34,7 @@ html,body{
   border-right:1px solid black;
 }
 
-h1{
+.AssignmentFont{
   font-size: 25px;
   
 }
@@ -86,7 +87,7 @@ h1{
   margin-left: 50px;
 }
 
-a:visited{
+.visit{
   color:#666;
 }
 
