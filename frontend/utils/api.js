@@ -141,14 +141,39 @@ export class API {
 		.catch(error => console.log(error));
 	}
   
-	post(url, data) {
+	post(url, data, isFormData = false) {
 	  return fetch(this.url + url, {
 		method: 'POST',
+		headers: {
+		  'Content-Type': isFormData ?  'multipart/form-data' : 'application/json',
+		  'x-access-token': this.token
+		},
+		body: JSON.stringify(data)
+	  })
+		.then(response => response.json())
+		.catch(error => console.log(error));
+	}
+
+	patch(url, data) {
+	  return fetch(this.url + url, {
+		method: 'PATCH',
 		headers: {
 		  'Content-Type': 'application/json',
 		  'x-access-token': this.token
 		},
 		body: JSON.stringify(data)
+	  })
+		.then(response => response.json())
+		.catch(error => console.log(error));
+	}
+
+	delete(url) {
+	  return fetch(this.url + url, {
+		method: 'DELETE',
+		headers: {
+		  'Content-Type': 'application/json',
+		  'x-access-token': this.token
+		}
 	  })
 		.then(response => response.json())
 		.catch(error => console.log(error));

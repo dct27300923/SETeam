@@ -5,6 +5,11 @@ export const getToken = () => {
 	return window.localStorage.getItem('token');
 }
 
+export const setToken = (token) => {
+	if(!window) return;
+	window.localStorage.setItem('token', token);
+}
+
 export const destroyToken = () => {
 	if(!window) return;
 	window.localStorage.removeItem('token');
@@ -13,4 +18,15 @@ export const destroyToken = () => {
 export const decode = (token) => {
 	if(!token) return;
 	return jwt.decode(token);
+}
+
+export const validate = () => {
+	const token = getToken();
+	if(!token) return;
+	const decoded = decode(token);
+	if(!decoded) {
+		return false;
+	} else {
+		return true;
+	}
 }
