@@ -6,7 +6,6 @@ import Link from 'next/link';
 function MainComponent(props)
 {
     let lectureList = [];
-
     for (let i = 0; i < props.lectureInfo.length; i++)
     {
         let name = <p className="subjectName">{props.lectureInfo[i]["title"]}</p>;
