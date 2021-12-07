@@ -1,15 +1,11 @@
-import style from './AssignmentUpload.module.css';
-import uosSymbol from './style/ci_m.png';
-import {useState} from 'react';
-import Axios from 'axios';
-
-
+import style from '../styles/AssignmentUpload.module.css';
+import {useEffect, useState} from 'react';
+import {login, uploadLecture} from "../utils/api-tools";
 //header
 function AssignmentUploadHeader(){
   return(
     <div id={style.assignmentHeader}>
-      <a href="https://www.uos.ac.kr/main.do">
-        <img src={uosSymbol}></img></a>
+      <a href="https://www.uos.ac.kr/main.do"></a>
     </div>
   );
 }
@@ -24,18 +20,12 @@ function AssignmentUploadMain(){
   const saveDescription = (event)=>{setDescription(event.target.value)};
   const handleFileUpload = (event)=>{setUploadFile(event.target.files[0])};
 
+
+
   //making json by contents and post to server
-  const makeJSONFileAndPost = () =>{
-    let formData = new FormData();
-    formData.append("file",uploadFile);
-    const submittedTitleDesc =[{
-      "title":title,
-      "description":description
-    }]
-    formData.append("data",new Blob([JSON.stringify(submittedTitleDesc)],
-    {type:"aplplication/json"}));
-    //post되는지 확인 필요함
-    Axios.post('http://13.125.246.198',formData);
+  const assignmentUpload = () =>{
+    useEffect(()=>{login("prod@gmail.com","123");},[]);
+    uploadLecture(1,uploadFile,title);
   }
 
   // form submit event 
@@ -51,11 +41,12 @@ function AssignmentUploadMain(){
     
     //if press confirm button
     if(submitAnswer){
-      makeJSONFileAndPost();
+      assignmentUpload();
     }else{
       return;
     }
   };
+  console.log(uploadFile);
 
   return (
     <div id={style.assignmentMain}>

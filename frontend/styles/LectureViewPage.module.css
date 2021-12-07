@@ -1,16 +1,3 @@
-html,body{
-  margin: 0;
-  padding: 0;
-}
-
-h1{
-  display:block;
-  margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-}
 
 #lectureViewPageHeader h1{
   margin: 0px;
@@ -32,7 +19,7 @@ h1{
 }
 
 .closeButton{
-  background:transparent;
+  background: url(./close.png) no-repeat left center transparent;
   border-radius:0px;
   border:0px;
   padding:10px;
@@ -42,31 +29,55 @@ h1{
 }
 
 .playtime{
-  background: url(./icon/division.png) no-repeat left center;
+  background: url(./division.png) no-repeat left center;
   margin-left: 14px;
   opacity: 0.6;
   padding-left: 14px;
 }
 
 .progressMessage{
-  background: url(./icon/division.png) no-repeat left center;
+  background: url(./division.png) no-repeat left center;
   margin-left: 14px;
   padding-left: 14px;
 }
 
 #lectureViewerMain{
-
   background:white;
   min-height:700px;
-  text-align:center;
+  width:80%;
+  display:inline-block;
+
 }
 
 .player{
   position:absolute;
-  left:0;
-  width:100%;
+  width:80%;
   height:90%;
   
+}
+
+#bookmark{
+  position:absolute;
+  width:18%;
+  height:90%;
+  display:inline-block;
+  margin-left:10px;
+}
+
+.bookmarkDescription{
+  width:80%;
+  height:200px;
+  margin-bottom:10px;
+}
+
+#bookmarkButton{
+  width:80%;
+  margin-bottom: 5px;
+}
+
+#timestamp{
+  position:absolute;
+  float:right;
 }
 
 #lectureViewerFooter{
