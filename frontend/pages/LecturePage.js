@@ -7,9 +7,10 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { API } from "../utils/api.js";
 import { decode, getToken } from '../utils/token';
-import { getLectureResource } from "../utils/api-tools.js";
+import { getMainData } from "../utils/api-tools.js";
+import { getLectureDetail } from "../utils/api-tools.js";
 
-function getLectureListFromDB(userID, subject)
+function getLectureListFromDB(subject)
 {
     return [
         //1주차
@@ -35,13 +36,13 @@ function getLectureListFromDB(userID, subject)
     ];
 }
 
-function getAttendanceStatusFromDB(userID, subject)
+function getAttendanceStatusFromDB(subject)
 {
     // 0: None, 1: 출석, 2: 지각, 3: 결석
     return [1,1,2,1,3,1,1,1,2,1,1,1,0,0,0,0];
 }
 
-function getBookmarkFromDB(userID, subject)
+function getBookmarkFromDB(subject)
 {
     return [
         {
@@ -59,19 +60,93 @@ function getBookmarkFromDB(userID, subject)
     ]
 }
 
+function getLectureID(map, subject)
+{
+    for (let i=0; i<map.length; i++)
+        if (Object.values(map[i])[1] == subject)
+            return Object.values(map[i])[0];
+}
+
+function create2DArray(row, column)
+{
+    var arr = new Array(row);
+    for (let i=0;i<row;i++)
+        arr[i] = new Array(column);
+    return arr;
+}
+
+// function getLectureID(subject)
+// {
+//     // for (let i=0; i<map.length; i++)
+//     //     if (Object.values(map[i])[1] == subject)
+//     //         return Object.values(map[i])[0];
+//     if (subject == "인공지능")
+//         return 1;
+//     else if (subject == "소프트웨어응용")
+//         return 2;
+//     else if (subject == "선형대수")
+//         return 3;  
+// }
+
+function getLectureList(lectureInfo)
+{
+    console.log("lectureInfo: " + Object.keys(lectureInfo[0]));
+    let lectureList = create2DArray(16,0);
+    let totalLectureCount = lectureInfo.length;
+    let weekIdx = 2;
+    let titleIdx = 3;
+    let urlIdx = 4;
+    for (let i=0;i<totalLectureCount;i++)
+    {
+        let week = Object.values(lectureInfo[i])[weekIdx];
+        let title = Object.values(lectureInfo[i])[titleIdx];
+        let url = Object.values(lectureInfo[i])[urlIdx];
+        lectureList[week-1].push([title,url]);
+    }
+    //console.log(lectureList);
+    return lectureList;
+}
+
 export default function LecturePage()
 {
     const router = useRouter();
-    let id = router.query["id"];
     let subject = router.query["subject"];
+    let [lectureMap, setLectureMap] = useState([]);
+    let [lectureID, setLectureID] = useState(0);
+    let [lectureList, setLectureList] = useState([]);
+
+
+    // 강의 이름으로 lectureID 가져오기
+    useEffect(() => {
+        if(!window) return;
+        getMainData()
+        .then((res) => {
+            let id = getLectureID(res, subject);
+            setLectureID(id);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }, []);
+    // lectureID로 lectureDetail 가져오기
+    useEffect(() => {
+        if(!window) return;
+        getLectureDetail(lectureID)
+        .then((res) => {
+            console.log(res);
+            setLectureList(getLectureList(res[0]));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }, []);
     return (
         <Layout>
             <LectureComponent 
-                userID={id}
                 subject={subject}
-                lectureList={getLectureListFromDB(id, subject)}
-                attendanceStatus={getAttendanceStatusFromDB(id, subject)}
-                bookmark={getBookmarkFromDB(id, subject)}
+                lectureList={lectureList}//getLectureListFromDB(subject)}
+                attendanceStatus={getAttendanceStatusFromDB(subject)}
+                bookmark={getBookmarkFromDB(subject)}
             />
         </Layout>
     );

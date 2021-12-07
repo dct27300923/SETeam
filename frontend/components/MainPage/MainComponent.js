@@ -33,8 +33,7 @@ function MainComponent(props)
             href={{
                 pathname: '/LecturePage',
                 query: {
-                    id: props.userID,
-                    subject: props.lectureInfo[i]["과목"]
+                    subject: props.lectureInfo[i]["title"]
                 }
             }}
         >
