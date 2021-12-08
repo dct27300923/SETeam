@@ -3,7 +3,7 @@ import ContainerComponent from "../ContainerComponent.js";
 import styles from "../../styles/LectureComponent.module.css";
 import { getBookmarkByLectureId, removeBookmark } from "../../utils/api-tools.js";
 import {useState} from 'react';
-
+import Link from "next/link";
 // TODO: userID, subject, title로 데이터베이스 접근해서 삭제하기.
 //      currentBookmark 인자로 받는거 없애기.
 // function deleteBookmarkFromDB(userID, subject, currentBookmark,title)
@@ -61,7 +61,8 @@ function getLectureList(lectureDetail)
         let week = lectureDetail[i]['week'];
         let title = lectureDetail[i]['title'];
         let url = lectureDetail[i]['url'];
-        lectureList[week-1].push([title,url]);
+        let lectureResourseId = lectureDetail[i]['LectureResourceId'];
+        lectureList[week-1].push([title,url, lectureResourseId]);
     }
     //console.log(lectureList);
     return lectureList;
@@ -115,6 +116,14 @@ function LectureComponent(props)
     const attendanceStatusFromDB = getAttendanceStatus(lectureDetail[1]);
     const bookmarkFromDB = getBookmark(props.bookmark);
     const [bookmarks, setBookmarks] = useState(bookmarkFromDB);
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth() + 1;
+    let day = now.getDate();
+
+    let startDate = new Date(2021, 9, 1);
+    let endDate = new Date(year, month, day);
+    let thisWeek = parseInt((endDate.getTime() - startDate.getTime())/(1000*60*60*24*7));
     // return (
     //     <>
     //     </>
@@ -131,17 +140,29 @@ function LectureComponent(props)
     </div>
     let mainLectureContainer;
     let mainLectures = [];
-    for (let i=0; i < lectureListFromDB[0].length; i++)
+    for (let i=0; i < lectureListFromDB[thisWeek].length; i++)
     {
-        let lecture = <a href={lectureListFromDB[0][i][1]}>
-            {lectureListFromDB[0][i][0]}</a>
+        let lecture = <Link
+            href={{
+                pathname:"/LectureViewPage",
+                query:{
+                    lectureResourceId: lectureListFromDB[thisWeek][i][2]
+                }
+        }}>
+
+        <a>
+            {lectureListFromDB[thisWeek][i][0]}
+        </a>
+        </Link>
+        // let lecture = <a href={lectureListFromDB[0][i][1]}>
+        //     {lectureListFromDB[0][i][0]}</a>
         mainLectures.push(lecture);
     }
     mainLectureContainer = <div className={styles.lectureContainer}>
         {mainLectures}
     </div>
     let mainDescription = <div className={styles.description}>
-        <div className={styles.title}>1주차</div>
+        <div className={styles.title}>{thisWeek}주차</div>
         <div className={styles.lectures}>
             {mainLectureContainer}
         </div>
@@ -196,8 +217,23 @@ function LectureComponent(props)
 
         for(let i=0; i<lectureListFromDB[week].length; i++)
         {
-            let lecture = <a href={lectureListFromDB[week][i][1]}>
-                {lectureListFromDB[week][i][0]}</a>
+            let lecture = 
+            <Link
+                href={{
+                    pathname: '/LectureViewPage',
+                    query: {
+                        lectureResourceId: lectureListFromDB[week][i][2]
+                    }
+                }}
+            >
+                <a> 
+            {/* href={lectureListFromDB[week][i][1]}> */}
+                    {lectureListFromDB[week][i][0]}
+                </a>
+            </Link>
+
+            //let lecture = <a href={lectureListFromDB[week][i][1]}>
+            //    {lectureListFromDB[week][i][0]}</a>
             lectureList.push(lecture);
         }
         lectureListContainer = <div className={styles.video}>

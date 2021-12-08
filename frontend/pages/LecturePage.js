@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { API } from "../utils/api.js";
 import { decode, getToken, validate } from '../utils/token';
-import { getBookmarkByLectureId, getMainData } from "../utils/api-tools.js";
+import { getBookmarkByLectureId, getLectureResource, getMainData } from "../utils/api-tools.js";
 import { getLectureDetail } from "../utils/api-tools.js";
 
 // function getLectureID(map, subject)
