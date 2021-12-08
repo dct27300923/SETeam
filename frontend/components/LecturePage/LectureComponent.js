@@ -1,22 +1,38 @@
 import OutlineComponent from "./OutlineComponent.js";
 import ContainerComponent from "../ContainerComponent.js";
 import styles from "../../styles/LectureComponent.module.css";
-import { removeBookmark } from "../../utils/api-tools.js";
+import { getBookmarkByLectureId, removeBookmark } from "../../utils/api-tools.js";
 import {useState} from 'react';
 
 // TODO: userID, subject, title로 데이터베이스 접근해서 삭제하기.
 //      currentBookmark 인자로 받는거 없애기.
-function deleteBookmarkFromDB(userID, subject, currentBookmark,title)
+// function deleteBookmarkFromDB(userID, subject, currentBookmark,title)
+// {
+//     /*
+//         일단 데이터베이스에서 삭제.
+//         return getBookmarkFromDB(userID,subject);
+//     */
+//     // let currentBookmark = getBookmarkFromDB(userID, subject);
+//     currentBookmark = currentBookmark.slice();
+//     for (let i=0; i < currentBookmark.length; i++)
+//     {
+//         if (currentBookmark[i]["title"] == title)
+//         {
+//             currentBookmark.splice(i,1);
+//             break;
+//         }
+//     }
+//     return currentBookmark;
+// }
+
+function deleteBookmarkFromDB(currentBookmark, bookmarkId)
 {
-    /*
-        일단 데이터베이스에서 삭제.
-        return getBookmarkFromDB(userID,subject);
-    */
+    removeBookmark(bookmarkId);
     // let currentBookmark = getBookmarkFromDB(userID, subject);
     currentBookmark = currentBookmark.slice();
     for (let i=0; i < currentBookmark.length; i++)
     {
-        if (currentBookmark[i]["title"] == title)
+        if (currentBookmark[i]["bookmarkId"] == bookmarkId)
         {
             currentBookmark.splice(i,1);
             break;
@@ -221,9 +237,10 @@ function LectureComponent(props)
                     onClick={function(e){
                         e.preventDefault();
                         //let deletedBookmark = deleteBookmarkFromDB(props.userID,props.subject,bookmarks, bookmarkTitle);
-                        //setBookmarks(deletedBookmark);
-                        removeBookmark(bookmarks[i]['bookmarkId']);
-                        setBookmarks(bookmarkFromDB);
+                        let deletedBookmark = deleteBookmarkFromDB(bookmarks, bookmarks[i]['bookmarkId']);
+                        setBookmarks(deletedBookmark);
+                        //removeBookmark(bookmarks[i]['bookmarkId']);
+                        //setBookmarks(getBookmarkByLectureId(1));
                     }.bind(this)}
                 >Delete</a>
             </div>

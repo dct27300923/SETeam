@@ -27,7 +27,6 @@ export default function LectureUploadComponent()
         id="title" className={styles.title}></input>
     let file = <input type="file" id="fileBtn" className={styles.fileBtn}></input>
     let buttons;
-    let uploadedFile;
 
     const addUpload = () => {
         uploadList.push(<div>

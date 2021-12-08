@@ -10,14 +10,14 @@ import { decode, getToken } from '../utils/token';
 import { getBookmarkByLectureId, getMainData } from "../utils/api-tools.js";
 import { getLectureDetail } from "../utils/api-tools.js";
 
-function getLectureID(map, subject)
-{
-    //console.log("map: "+map[0][0]);
-    console.log("subject: "+subject);
-    for (let i=0; i<map.length; i++)
-        if (Object.values(map[i])[1] == subject)
-            return Object.values(map[i])[0];
-}
+// function getLectureID(map, subject)
+// {
+//     //console.log("map: "+map[0][0]);
+//     console.log("subject: "+subject);
+//     for (let i=0; i<map.length; i++)
+//         if (Object.values(map[i])[1] == subject)
+//             return Object.values(map[i])[0];
+// }
 
 function create2DArray(row, column)
 {
@@ -27,18 +27,18 @@ function create2DArray(row, column)
     return arr;
 }
 
-// function getLectureID(subject)
-// {
-//     // for (let i=0; i<map.length; i++)
-//     //     if (Object.values(map[i])[1] == subject)
-//     //         return Object.values(map[i])[0];
-//     if (subject == "인공지능")
-//         return 1;
-//     else if (subject == "소프트웨어응용")
-//         return 2;
-//     else if (subject == "선형대수")
-//         return 3;  
-// }
+function getLectureID(subject)
+{
+    // for (let i=0; i<map.length; i++)
+    //     if (Object.values(map[i])[1] == subject)
+    //         return Object.values(map[i])[0];
+    if (subject == "인공지능")
+        return 1;
+    else if (subject == "소프트웨어응용")
+        return 2;
+    else if (subject == "선형대수")
+        return 3;  
+}
 
  function getLectureList(lectureInfo)
 {
@@ -81,20 +81,20 @@ export default function LecturePage()
     const [lectureDetail, setLectureDetail] = useState();
     const [bookmark, setBookmark] = useState();
     const [lectureID, setLectureID] = useState();
+    const id = getLectureID(subject);
 
     useEffect(() => {
         if(!window) return;
-        
-        getMainData()
-        .then((res) => {
-            console.log("res: "+getLectureID(res, subject));
-            setLectureID(getLectureID(res, subject));
-        })
-        getLectureDetail(1)
+        // getMainData()
+        // .then((res) => {
+        //     const id = getLectureID(res, subject);
+        //     setLectureID(id);//getLectureID(res, subject));
+        // });
+        getLectureDetail(id)
         .then((res) => {
             setLectureDetail(res);
         });
-        getBookmarkByLectureId(1)
+        getBookmarkByLectureId(id)
         .then((res) => {
             setBookmark(res);
         });

@@ -10,9 +10,9 @@ export default function Login() {
   const handleLogin = async () => {
     if (!window) return;
     try {
-      const res = await login('abc@gmail.com', '1234');
+      const res = await login('prod@gmail.com', '123');
       alert("Login Success");
-      router.push('/');
+      router.push('/LectureUploadPage');
     } catch (e) {
       console.error(e);
       alert("ERROR HANDLER");
