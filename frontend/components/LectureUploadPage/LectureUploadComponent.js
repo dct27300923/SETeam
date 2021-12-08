@@ -47,10 +47,17 @@ export default function LectureUploadComponent()
         let titleElements = document.getElementsByClassName("LectureUploadComponent_title__4v82a");
         let fileElements = document.getElementsByClassName("LectureUploadComponent_fileBtn__QOWrk");
         const promises = [];
+
         for(let i = 0; i < titleElements.length; i++) {
             let title = titleElements[i].value;
             let file = fileElements[i].files[0];
-            promises.push(uploadLecture(week, file, title));
+            const video = document.createElement('video');
+            video.preload = 'metadata';
+            video.onloadedmetadata = () => {
+                console.log(video.duration);
+            }
+            video.src = URL.createObjectURL(file);
+           /* promises.push(uploadLecture(week, file, title));*/
         }
         Promise.all(promises).then(function(values) {
             console.log(values);

@@ -30,3 +30,14 @@ export const validate = () => {
 		return true;
 	}
 }
+
+export const isStudent = () => {
+	const token = getToken();
+	if(!token) return;
+	const decoded = decode(token);
+	if(!decoded) {
+		return false;
+	} else {
+		return decoded.StudentOrProfessor === "P" ? false : true;
+	}
+}

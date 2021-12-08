@@ -22,8 +22,13 @@ export default function Login() {
     }
     try {
       const res = await login(email, password);
+      const { StudentOrProfessor } = res;
       alert("Login Success");
-      router.push('/');
+      if(StudentOrProfessor === 'P') {
+        router.push('/LectureUploadPage');
+      } else {
+        router.push('/');
+      }
     } catch (e) {
       console.error(e);
     }

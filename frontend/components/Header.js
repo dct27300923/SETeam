@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 
 const Header = () => {
 	const [userId, setUserId] = useState('');
+	const [role, setRole] = useState('');
 	const router = useRouter();
 	const handleLogout = () => {
 		destroyToken();
@@ -19,7 +20,12 @@ const Header = () => {
 	useEffect(() => {
 		const token = getToken();
 		if (token) {
-			const { userId } = decode(token);
+			const { userId, StudentOrProfessor } = decode(token);
+			if(StudentOrProfessor === 'P') {
+				setRole('Professor');
+			} else {
+				setRole('Student');
+			}
 			setUserId(userId);
 		}
 	}, []);
@@ -40,7 +46,7 @@ const Header = () => {
 			    cursor: pointer;
 				color: #f2f;
 				margin-left: 10px;
-			`}>Logged In: {userId}
+			`}>Logged In: {userId} ({role})
 			</span>}
 		</div>
 	)
