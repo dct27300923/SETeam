@@ -227,7 +227,6 @@ function LectureComponent(props)
                 }}
             >
                 <a> 
-            {/* href={lectureListFromDB[week][i][1]}> */}
                     {lectureListFromDB[week][i][0]}
                 </a>
             </Link>

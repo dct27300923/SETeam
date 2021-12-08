@@ -97,15 +97,7 @@ export default function LecturePage()
         if(!subject) return;
         console.log("subject: "+subject);
         // if subject is changed, then get lecture list :: TODO
-    }, [subject]);
-
-    useEffect(() => {
-        if(!window) return;
-        // getMainData()
-        // .then((res) => {
-        //     const id = getLectureID(res, subject);
-        //     setLectureID(id);//getLectureID(res, subject));
-        // });
+        //console.log(getLectureID(subject));
         getLectureDetail(id)
         .then((res) => {
             setLectureDetail(res);
@@ -114,7 +106,24 @@ export default function LecturePage()
         .then((res) => {
             setBookmark(res);
         });
-    }, []);
+    }, [subject]);
+
+    // useEffect(() => {
+    //     if(!window) return;
+    //     // getMainData()
+    //     // .then((res) => {
+    //     //     const id = getLectureID(res, subject);
+    //     //     setLectureID(id);//getLectureID(res, subject));
+    //     // });
+    //     getLectureDetail(id)
+    //     .then((res) => {
+    //         setLectureDetail(res);
+    //     });
+    //     getBookmarkByLectureId(id)
+    //     .then((res) => {
+    //         setBookmark(res);
+    //     });
+    // }, []);
     
     return (
         <Layout>
