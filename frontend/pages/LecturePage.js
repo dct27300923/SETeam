@@ -76,7 +76,8 @@ function getAttendanceList(attendInfo)
 export default function LecturePage()
 {
     const router = useRouter();
-    let subject = router.query["subject"];
+    
+    const [subject, setSubject] = useState(undefined);
     const [lectureDetail, setLectureDetail] = useState();
     const [bookmark, setBookmark] = useState();
     const [lectureID, setLectureID] = useState();
@@ -86,8 +87,17 @@ export default function LecturePage()
         if(!validate()) {
             router.push("/login");
             return;
-        }      
-    }, []);
+        }
+        let subject = router.query["subject"];
+        setSubject(subject);
+        // subject is undefined or string
+    }, [router]);
+
+    useEffect(() => {
+        if(!subject) return;
+        console.log("subject: "+subject);
+        // if subject is changed, then get lecture list :: TODO
+    }, [subject]);
 
     useEffect(() => {
         if(!window) return;
@@ -105,8 +115,10 @@ export default function LecturePage()
             setBookmark(res);
         });
     }, []);
+    
     return (
         <Layout>
+            {subject !== undefined &&
             <LectureComponent
                 lectureDetail={lectureDetail}
                 bookmark={bookmark}
@@ -114,7 +126,7 @@ export default function LecturePage()
                 //lectureList={lectureList}//getLectureListFromDB(subject)}
                 //attendanceStatus={getAttendanceStatusFromDB(subject)}
                 //bookmark={getBookmarkFromDB(subject)}
-            />
+            />}
         </Layout>
     );
 }
