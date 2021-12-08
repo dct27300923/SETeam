@@ -1,11 +1,10 @@
 import style from '../styles/AssignmentUpload.module.css';
-import {useEffect, useState} from 'react';
-import {login, uploadLecture} from "../utils/api-tools";
+import { useState,useEffect,useRef} from "react";
+import {CreateBookmark, login} from "../utils/api-tools";
 //header
 function AssignmentUploadHeader(){
   return(
     <div id={style.assignmentHeader}>
-      <a href="https://www.uos.ac.kr/main.do"></a>
     </div>
   );
 }
@@ -19,16 +18,19 @@ function AssignmentUploadMain(){
   const saveTitle = (event)=>{setTitle(event.target.value)};
   const saveDescription = (event)=>{setDescription(event.target.value)};
   const handleFileUpload = (event)=>{setUploadFile(event.target.files[0])};
+  const descriptionRef = useRef(null);
+  const titleRef = useRef(null);
+  const [userId, setUserId] = useState('');
+  
+  useEffect(()=>{
+    login("abc@gmail.com","1234").then((result)=>setUserId(result.userId));
 
-
-
-  //making json by contents and post to server
-  const assignmentUpload = () =>{
-    useEffect(()=>{login("prod@gmail.com","123");},[]);
-    uploadLecture(1,uploadFile,title);
-  }
+  },[]);
+ 
 
   // form submit event 
+  // 제출 버튼 누르면 북마크 api post하게 해놨습니다.
+  // 파일 업로드는 하지 않습니다.
   const onSubmit = (event)=>{
     event.preventDefault();
     if(title==="" || description===""){
@@ -37,16 +39,18 @@ function AssignmentUploadMain(){
     }
     const message = "제출하시겠습니까?";
     const submitAnswer = window.confirm(message);
-    console.log(`title:[${title}], description:[${description}]`);
     
     //if press confirm button
     if(submitAnswer){
-      assignmentUpload();
+      CreateBookmark(2,title,description);
     }else{
       return;
     }
+    descriptionRef.current.value="";
+    titleRef.current.value="";
+    setDescription("");
+    setTitle("");
   };
-  console.log(uploadFile);
 
   return (
     <div id={style.assignmentMain}>
@@ -54,13 +58,16 @@ function AssignmentUploadMain(){
         <div><h1>과제 업로드</h1></div>
         <form onSubmit={onSubmit}>
         <div>
-          <textarea
+          <input
+          type="number"
+          ref = {titleRef}
           onChange={saveTitle}
           className={style.titleBox} 
-          placeholder="Title..."/>
+          placeholder="Title number..."/>
         </div>
         <div>
           <textarea
+          ref = {descriptionRef}
           onChange={saveDescription}
           className={style.descriptionBox}
           placeholder="Description..."/>

@@ -1,4 +1,4 @@
-import { useState,useEffect} from "react";
+import { useState,useEffect,useRef} from "react";
 import style from '../styles/LectureViewPage.module.css';
 import {CreateBookmark, getLectureResource, getMainData, login} from "../utils/api-tools";
 
@@ -15,13 +15,11 @@ function LectureViewHeader(){
   const [loading,setLoading] = useState(true);
   const [lectureInfo,setLectureInfo] = useState([]);
 
-  
+  //강의 정보 받아오기 
   useEffect(()=>{
     login("abc@gmail.com","1234").then((result)=>setUserId(result.userId));
     getMainData().then((result)=>setLectureInfo(result[1].title)).then(setLoading(false));
   },[]);
-  
-
 
 
   function HeaderDefault(){
@@ -37,12 +35,12 @@ function LectureViewHeader(){
       </button>
       </h1>
       </div>
-      
+
     )
   }
 
   function HeaderAfterLoading(){
-    
+
     return(
       <div>
       <h1>{lectureInfo}
@@ -53,11 +51,11 @@ function LectureViewHeader(){
         className={style.closeButton}
         onClick={windowClose}>
         </button>
-      </h1>   
+      </h1>
     </div>
     )
   }
-  
+
   return(
     <div id={style.lectureViewPageHeader}>
       {loading?<HeaderDefault/>:<HeaderAfterLoading/>}
@@ -67,16 +65,20 @@ function LectureViewHeader(){
 
 
 function LectureViewerMain(){
-  
+
   const [description,setDescription] = useState("");
   const saveDescription = (event)=>{setDescription(event.target.value)};
   const [bookmark,setBookmark] = useState([]);
   const [currentTime,setCurrentTime] = useState("");
   const [lectureURL,setLectureURL] = useState("");
   const [loading,setLoading] = useState(true);
+
+
   const getCurrentTime = (event)=>{
     setCurrentTime(event.target.currentTime);
   }
+  const videoRef = useRef(null);
+  const textRef = useRef(null);
 
   useEffect(()=>{
     getLectureResource(2).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
@@ -87,11 +89,11 @@ function LectureViewerMain(){
       "bookmarkSec":currentTime,
       "content":description,
     };
+    textRef.current.value="";
+    setDescription("");
     setBookmark((currentArray)=>[bookmarkContainer, ... currentArray]);
-    console.log(currentTime);
-    console.log(bookmark);
   }
-  
+
   const postBookmark = ()=>{
     for(let i = 0 ; i < bookmark.length ; i++){
       const {bookmarkSec,content} = bookmark[i];
@@ -99,11 +101,17 @@ function LectureViewerMain(){
     }
   }
 
-    
+  const timeJump = (event)=>{
+    const bookmarkTime = event.target.title;
+    videoRef.current.currentTime = bookmarkTime;
+  }
+
+
   return(
     <div>
     <div id={style.lectureViewerMain}>
       <video id="video"
+        ref ={videoRef}
         src={loading ? null : lectureURL}
         controls
         muted
@@ -118,21 +126,22 @@ function LectureViewerMain(){
       <h1>북마크</h1>
       <div>
       <textarea
+      ref = {textRef}
       className={style.bookmarkDescription}
       onChange={saveDescription}
       placeholder="bookmark description"/>
+      <button id={style.bookmarkButton}
+              onClick={onClick}>북마크 생성</button>
       </div>
-      <div>
-        <button id={style.bookmarkButton}
-                onClick={onClick}>북마크 생성</button>
-      </div>
+
       <div>
         <button id={style.bookmarkButton}
                 onClick={postBookmark}>북마크 전송</button>
       </div>
       <hr/>
       <ol>
-      {bookmark.map((item,index)=><li key={index}>시간: {item.bookmarkSec}, 
+      {bookmark.map((item,index)=><li key={index} title={item.bookmarkSec}
+      onClick={timeJump}>시간: {item.bookmarkSec},
       내용: {item.content}</li>)}
       </ol>
     </div>
