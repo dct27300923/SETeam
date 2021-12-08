@@ -2,11 +2,10 @@ import LectureComponent from "../components/LecturePage/LectureComponent.js";
 import {useRouter} from 'next/router';
 import Layout from '../components/Layout';
 import { css, jsx }from '@emotion/react';
-
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { API } from "../utils/api.js";
-import { decode, getToken } from '../utils/token';
+import { decode, getToken, validate } from '../utils/token';
 import { getBookmarkByLectureId, getMainData } from "../utils/api-tools.js";
 import { getLectureDetail } from "../utils/api-tools.js";
 
@@ -82,6 +81,13 @@ export default function LecturePage()
     const [bookmark, setBookmark] = useState();
     const [lectureID, setLectureID] = useState();
     const id = getLectureID(subject);
+
+    useEffect(() => {
+        if(!validate()) {
+            router.push("/login");
+            return;
+        }      
+    }, []);
 
     useEffect(() => {
         if(!window) return;

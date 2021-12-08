@@ -1,6 +1,8 @@
 import { useState,useEffect,useRef} from "react";
+import { useRouter } from 'next/router';
 import style from '../styles/LectureViewPage.module.css';
 import {CreateBookmark, getLectureResource, getMainData, login} from "../utils/api-tools";
+import { getToken, validate, decode } from "../utils/token";
 
 //header
 function LectureViewHeader(){
@@ -14,10 +16,16 @@ function LectureViewHeader(){
   const [userId, setUserId] = useState('');
   const [loading,setLoading] = useState(true);
   const [lectureInfo,setLectureInfo] = useState([]);
+  const router = useRouter();
 
   //강의 정보 받아오기 
   useEffect(()=>{
-    login("abc@gmail.com","1234").then((result)=>setUserId(result.userId));
+    if(!validate()) {
+      router.push("/login");
+      return;
+    }
+    const { userId } = decode(getToken());
+    setUserId(userId);
     getMainData().then((result)=>setLectureInfo(result[1].title)).then(setLoading(false));
   },[]);
 
@@ -72,7 +80,7 @@ function LectureViewerMain(){
   const [currentTime,setCurrentTime] = useState("");
   const [lectureURL,setLectureURL] = useState("");
   const [loading,setLoading] = useState(true);
-
+  const router = useRouter();
 
   const getCurrentTime = (event)=>{
     setCurrentTime(event.target.currentTime);
@@ -81,7 +89,17 @@ function LectureViewerMain(){
   const textRef = useRef(null);
 
   useEffect(()=>{
-    getLectureResource(2).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
+    if(!validate()) {
+      router.push("/login");
+      return;
+    }
+    const lectureResourceId = router.query.lectureResourceId;
+    if(!lectureResourceId){
+      router.push("/"); // todo fix
+      return;
+    }
+    // example: localhost:3000/LectureViewPage?lectureResourceId=1
+    getLectureResource(lectureResourceId).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
   },[])
 
   const onClick = ()=>{

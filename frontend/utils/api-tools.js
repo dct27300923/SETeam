@@ -12,6 +12,7 @@ export const login = async (id, password) => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to Login // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -26,6 +27,7 @@ export const getMainData = async () => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to get main data // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -40,6 +42,7 @@ export const uploadLecture = async (lectureInfoId, file, title) => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to upload lecture // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -51,6 +54,7 @@ export const getLectureResource = async (lectureResourceId) => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to get lecture resource // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -62,6 +66,7 @@ export const PatchLectureResource = async (lectureResourceId) => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to patch lecture resource // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -76,6 +81,7 @@ export const CreateBookmark = async (lectureResourceId, bookmarkSec, content) =>
 	} catch (e) {
 		console.error(e);
 		alert("Failed to create bookmark // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -87,6 +93,7 @@ export const removeBookmark = async (bookmarkId) => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to remove bookmark // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -98,6 +105,7 @@ export const getLectureDetail = async (lectureId) => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to get lecture detail // ERROR HANDLER");
+		throw e;
 	}
 }
 
@@ -109,5 +117,6 @@ export const getBookmarkByLectureId = async (lectureId) => {
 	} catch (e) {
 		console.error(e);
 		alert("Failed to get bookmark // ERROR HANDLER");
+		throw e;
 	}
 }
