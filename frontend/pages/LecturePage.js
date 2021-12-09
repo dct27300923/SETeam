@@ -90,12 +90,12 @@ export default function LecturePage()
         }
         let subject = router.query["subject"];
         setSubject(subject);
+        console.log()
         // subject is undefined or string
     }, [router]);
 
     useEffect(() => {
         if(!subject) return;
-        console.log("subject: "+subject);
         // if subject is changed, then get lecture list :: TODO
         //console.log(getLectureID(subject));
         getLectureDetail(id)

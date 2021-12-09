@@ -39,7 +39,7 @@ function MainComponent(props)
             <a>
                 <div className={styles.content}>
                     {name}
-                    {status}
+                    {/* {status} */}
                 </div>
             </a>
         </Link>

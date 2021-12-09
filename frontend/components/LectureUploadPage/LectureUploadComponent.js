@@ -3,11 +3,6 @@ import styles from "../../styles/LectureUploadComponent.module.css";
 import {uploadLecture} from "../../utils/api-tools";
 import {useState} from 'react';
 
-function uploadLectureToDB(week, title, file)
-{
-
-}
-
 function onFileUpload(event)
 {
     event.preventDefault();
@@ -72,7 +67,7 @@ export default function LectureUploadComponent()
     let lectureUploadPage = <div>
         {outline}
         {uploadList}
-        <select name="week" id="week">
+            <select name="week" id="week">
                 <option value="1">1주차</option>
                 <option value="2">2주차</option>
                 <option value="3">3주차</option>
@@ -89,6 +84,11 @@ export default function LectureUploadComponent()
                 <option value="7">14주차</option>
                 <option value="1">15주차</option>
                 <option value="2">16주차</option>
+            </select>
+            <select name="subject" id="subject">
+                <option value="1">인공지능</option>
+                <option value="2">소프트웨어응용</option>
+                <option value="3">선형대수</option>
             </select>
         {buttons}
     </div>
