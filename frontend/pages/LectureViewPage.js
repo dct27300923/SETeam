@@ -10,7 +10,6 @@ function LectureViewHeader(){
   //api 수정이 필요한거 같습니다
   function patchAttendanceSec(){
 
-    console.log("asdfas");
     PatchLectureResource(26).then(response=>{
       console.log(response);
     });
@@ -29,10 +28,8 @@ function LectureViewHeader(){
   const router = useRouter();
   
   //url에서lectureid 받아오고 > 강의정보 받아오기
-  //window가 클라이언트에 있는 객체라 새로고침하면 오류발생하는듯하네요
-
-  const url = window.location.search;
   const getLectureId = ()=>{
+    const url = window.location.search;
     for(let i = 0 ; i<url.length;i++){
       if(url[i]==='&'){
         return url[i-1];
