@@ -4,26 +4,6 @@ import styles from "../../styles/LectureComponent.module.css";
 import { getBookmarkByLectureId, removeBookmark } from "../../utils/api-tools.js";
 import {useState} from 'react';
 import Link from "next/link";
-// TODO: userID, subject, title로 데이터베이스 접근해서 삭제하기.
-//      currentBookmark 인자로 받는거 없애기.
-// function deleteBookmarkFromDB(userID, subject, currentBookmark,title)
-// {
-//     /*
-//         일단 데이터베이스에서 삭제.
-//         return getBookmarkFromDB(userID,subject);
-//     */
-//     // let currentBookmark = getBookmarkFromDB(userID, subject);
-//     currentBookmark = currentBookmark.slice();
-//     for (let i=0; i < currentBookmark.length; i++)
-//     {
-//         if (currentBookmark[i]["title"] == title)
-//         {
-//             currentBookmark.splice(i,1);
-//             break;
-//         }
-//     }
-//     return currentBookmark;
-// }
 
 function deleteBookmarkFromDB(currentBookmark, bookmarkId)
 {
@@ -49,11 +29,8 @@ function create2DArray(row, column)
     return arr;
 }
 
-
-
 function getLectureList(lectureDetail)
 {
-    //console.log("lectureInfo: " + Object.keys(lectureInfo[0]));
     let lectureList = create2DArray(16,0);
     let totalLectureCount = lectureDetail.length;
     for (let i=0;i<totalLectureCount;i++)
@@ -65,7 +42,6 @@ function getLectureList(lectureDetail)
         let lectureResourseId = lectureDetail[i]['LectureResourceId'];
         lectureList[week-1].push([title,url, lectureResourseId,lectureId]);
     }
-    //console.log(lectureList);
     return lectureList;
 }
 
@@ -98,11 +74,6 @@ function getBookmark(bookmarks)
     return bookmarkList;
 }
 
-function deleteBookmark(bookmarkId)
-{
-    removeBookmark(bookmarkId);
-}
-
 function LectureComponent(props)
 {
     let lectureDetail = props.lectureDetail;
@@ -125,14 +96,7 @@ function LectureComponent(props)
     let startDate = new Date(2021, 9, 1);
     let endDate = new Date(year, month, day);
     let thisWeek = parseInt((endDate.getTime() - startDate.getTime())/(1000*60*60*24*7));
-    // return (
-    //     <>
-    //     </>
-    // );
 
-    // const lectureListFromDB = props.lectureList;
-    // const attendanceStatusFromDB = props.attendanceStatus;
-    // let [bookmarks, setBookmarks] = useState(props.bookmark);
     let [mode, SetMode] = useState("lecture");
     // mainWeek
     let mainContainer;
@@ -141,23 +105,21 @@ function LectureComponent(props)
     </div>
     let mainLectureContainer;
     let mainLectures = [];
-    for (let i=0; i < lectureListFromDB[thisWeek].length; i++)
+    for (let i=0; i < lectureListFromDB[thisWeek-1].length; i++)
     {
         let lecture = <Link
             href={{
                 pathname:"/LectureViewPage",
                 query:{
-                    lectureId: lectureListFromDB[thisWeek][i][3],
-                    lectureResourceId: lectureListFromDB[thisWeek][i][2]
+                    lectureId: lectureListFromDB[thisWeek-1][i][3],
+                    lectureResourceId: lectureListFromDB[thisWeek-1][i][2]
                 }
         }}>
 
         <a>
-            {lectureListFromDB[thisWeek][i][0]}
+            {lectureListFromDB[thisWeek-1][i][0]}
         </a>
         </Link>
-        // let lecture = <a href={lectureListFromDB[0][i][1]}>
-        //     {lectureListFromDB[0][i][0]}</a>
         mainLectures.push(lecture);
     }
     mainLectureContainer = <div className={styles.lectureContainer}>
@@ -219,10 +181,6 @@ function LectureComponent(props)
 
         for(let i=0; i<lectureListFromDB[week].length; i++)
         {
-            // let lecture = 
-            //     <a href={"/LectureViewPage?lectureId="+lectureListFromDB[week][i][3]+"&lectureResourceId="+lectureListFromDB[week][i][2]} target="_blank"> 
-            //         {lectureListFromDB[week][i][0]}
-            //     </a>
             let lecture = 
             <Link
                 href={{
@@ -237,9 +195,6 @@ function LectureComponent(props)
                     {lectureListFromDB[week][i][0]}
                 </a>
             </Link>
-
-            //let lecture = <a href={lectureListFromDB[week][i][1]}>
-            //    {lectureListFromDB[week][i][0]}</a>
             lectureList.push(lecture);
         }
         lectureListContainer = <div className={styles.video}>
@@ -278,11 +233,8 @@ function LectureComponent(props)
                 <a href="#" className={styles.bookmarkDeleteBtn}
                     onClick={function(e){
                         e.preventDefault();
-                        //let deletedBookmark = deleteBookmarkFromDB(props.userID,props.subject,bookmarks, bookmarkTitle);
                         let deletedBookmark = deleteBookmarkFromDB(bookmarks, bookmarks[i]['bookmarkId']);
                         setBookmarks(deletedBookmark);
-                        //removeBookmark(bookmarks[i]['bookmarkId']);
-                        //setBookmarks(getBookmarkByLectureId(1));
                     }.bind(this)}
                 >Delete</a>
             </div>

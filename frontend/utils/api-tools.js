@@ -31,13 +31,15 @@ export const getMainData = async () => {
 	}
 }
 
-export const uploadLecture = async (lectureInfoId, week, file, title) => {
+export const uploadLecture = async (lectureId, week, file, title) => {
 	if(!validate()) return;
 	try {
-		const res = await new API().post(`/lecture/${lectureInfoId}/${week}`, {
+		const res = await new API().post(`/lecture/${lectureId}/${week}`, {
 			video: file,
 			title: title
 		}, true);
+		console.log("res: "+res);
+		console.log("res.result: "+res.result);
 		return res.result;
 	} catch (e) {
 		console.error(e);
