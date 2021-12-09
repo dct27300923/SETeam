@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import style from '../styles/LectureViewPage.module.css';
 import {CreateBookmark, getLectureResource, getMainData, login} from "../utils/api-tools";
 import { getToken, validate, decode } from "../utils/token";
+import CommonHead from "../components/CommonHead";
 
 //header
 function LectureViewHeader(){
@@ -93,14 +94,16 @@ function LectureViewerMain(){
       router.push("/login");
       return;
     }
+
+  },[])
+
+  useEffect(() => {
     const lectureResourceId = router.query.lectureResourceId;
     if(!lectureResourceId){
-      router.push("/"); // todo fix
       return;
     }
-    // example: localhost:3000/LectureViewPage?lectureResourceId=1
     getLectureResource(lectureResourceId).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
-  },[])
+  }, [router.query.lectureResourceId]);
 
   const onClick = ()=>{
     const bookmarkContainer = {
@@ -141,20 +144,30 @@ function LectureViewerMain(){
       </video>
     </div>
     <div id={style.bookmark}>
-      <h1>북마크</h1>
-      <div>
-      <textarea
-      ref = {textRef}
-      className={style.bookmarkDescription}
-      onChange={saveDescription}
-      placeholder="bookmark description"/>
-      <button id={style.bookmarkButton}
-              onClick={onClick}>북마크 생성</button>
+      <div className="card mb-4">
+        <div className="card-header">북마크</div>
+        <div className="card-body">
+        <textarea
+        ref = {textRef}
+        className={style.bookmarkDescription}
+        onChange={saveDescription}
+        placeholder="bookmark description"/>
       </div>
-
+      </div>
       <div>
-        <button id={style.bookmarkButton}
-                onClick={postBookmark}>북마크 전송</button>
+      <button id={style.bookmarkButton} className="btn btn-primary btn-icon-split"
+              onClick={onClick}>
+                <span className="icon text-white-50">
+                  <i className="fas fa-bookmark"></i>
+                </span>
+                <span className="text">북마크 생성</span>
+      </button>
+      <button id={style.bookmarkButton} className="btn btn-success btn-icon-split"
+                onClick={postBookmark}>                
+                <span className="icon text-white-50">
+                <i className="fas fa-arrow-right"></i></span>
+              <span className="text">북마크 전송</span>
+        </button>      
       </div>
       <hr/>
       <ol>
@@ -179,6 +192,7 @@ function LectureViewerFooter(){
 function LectureViewPage(){
   return(
     <div>
+      <CommonHead />
       <LectureViewHeader/>
       <LectureViewerMain/>
       <LectureViewerFooter/>

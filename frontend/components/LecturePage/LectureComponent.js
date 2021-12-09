@@ -184,9 +184,18 @@ function LectureComponent(props)
     for (let i=0; i<16; i++)
     {
         let attendanceComponent;
-        
+        let className = "btn-circle btn-sm fas"
+        if (attendanceStatusFromDB[i] == 0) {
+            className += " btn-primary";
+        } else if (attendanceStatusFromDB[i] == 1) {
+            className += " btn-success fa-check";
+        } else if (attendanceStatusFromDB[i] == 2) {
+            className += " btn-danger";
+        } else {
+            className += " btn-warning fa-exclamation-triangle";
+        }
         attendanceComponent = <div className={styles.attendanceComponent}>
-            <div className={styles.circle}
+            <div className={className}
                 style={{
                     backgroundColor: attendanceStatusFromDB[i]==0?"rgba(0,0,0,0)":
                                     attendanceStatusFromDB[i]==1?"#2276FC":
@@ -224,19 +233,9 @@ function LectureComponent(props)
             //         {lectureListFromDB[week][i][0]}
             //     </a>
             let lecture = 
-            <Link
-                href={{
-                    pathname: '/LectureViewPage',
-                    query: {
-                        lectureId: lectureListFromDB[week][i][3],
-                        lectureResourceId: lectureListFromDB[week][i][2]
-                    }
-                }}
-            >
-                <a> 
+                <a target="_blank" href={`/LectureViewPage?lectureId=${lectureListFromDB[week][i][3]}&lectureResourceId=${lectureListFromDB[week][i][2]}`} rel="noopener noreferrer"> 
                     {lectureListFromDB[week][i][0]}
                 </a>
-            </Link>
 
             //let lecture = <a href={lectureListFromDB[week][i][1]}>
             //    {lectureListFromDB[week][i][0]}</a>
