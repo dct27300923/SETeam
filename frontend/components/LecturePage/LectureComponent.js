@@ -50,10 +50,10 @@ function getAttendanceStatus(attendDetail)
     let attendList = [];
     for (let i=0;i<attendDetail.length;i++)
     {
-        let attend = attendDetail['attendanceResult'];
+        let attend = attendDetail[i]['attendanceResult'];
         if (attend == 'O')
             attendList.push(1);
-        else
+        else if (attend == 'X')
             attendList.push(3);
     }
     return attendList;
