@@ -109,19 +109,23 @@ function LectureComponent(props)
     let mainLectures = [];
     for (let i=0; i < lectureListFromDB[thisWeek-1].length; i++)
     {
-        let lecture = <Link
-            href={{
-                pathname:"/LectureViewPage",
-                query:{
-                    lectureId: lectureListFromDB[thisWeek-1][i][3],
-                    lectureResourceId: lectureListFromDB[thisWeek-1][i][2]
-                }
-        }}>
-
-        <a>
+        let lecture = 
+        <a target="_blank" href={`/LectureViewPage?lectureId=${lectureListFromDB[thisWeek-1][i][3]}&lectureResourceId=${lectureListFromDB[thisWeek-1][i][2]}`} rel="noopener noreferrer"> 
             {lectureListFromDB[thisWeek-1][i][0]}
         </a>
-        </Link>
+        // let lecture = <Link
+        //     href={{
+        //         pathname:"/LectureViewPage",
+        //         query:{
+        //             lectureId: lectureListFromDB[thisWeek-1][i][3],
+        //             lectureResourceId: lectureListFromDB[thisWeek-1][i][2]
+        //         }
+        // }}>
+
+        // <a>
+        //     {lectureListFromDB[thisWeek-1][i][0]}
+        // </a>
+        //</Link>
         mainLectures.push(lecture);
     }
     mainLectureContainer = <div className={styles.lectureContainer}>
