@@ -1,34 +1,54 @@
 import { useState,useEffect,useRef} from "react";
 import { useRouter } from 'next/router';
 import style from '../styles/LectureViewPage.module.css';
-import {CreateBookmark, getLectureResource, getMainData, login} from "../utils/api-tools";
+import {CreateBookmark, getLectureResource, getMainData, PatchLectureResource} from "../utils/api-tools";
 import { getToken, validate, decode } from "../utils/token";
 import CommonHead from "../components/CommonHead";
 
 //header
 function LectureViewHeader(){
 
-  function windowClose(){
-      window.opener=null;
-      window.open('','_self');
-      window.close();
+  //api 수정이 필요한거 같습니다
+  function patchAttendanceSec(){
+
+    PatchLectureResource(26).then(response=>{
+      console.log(response);
+    });
+    const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
+    const submitAnswer = window.confirm(message);
+    if(submitAnswer){
+      window.history.back();
+    }else{
+      return;
+    }
   }
 
   const [userId, setUserId] = useState('');
   const [loading,setLoading] = useState(true);
   const [lectureInfo,setLectureInfo] = useState([]);
   const router = useRouter();
-
-  //강의 정보 받아오기 
+  
+  //url에서lectureid 받아오고 > 강의정보 받아오기
+  const getLectureId = ()=>{
+    const url = window.location.search;
+    for(let i = 0 ; i<url.length;i++){
+      if(url[i]==='&'){
+        return url[i-1];
+      }
+    }
+  }
   useEffect(()=>{
     if(!validate()) {
       router.push("/login");
       return;
     }
+    const lectureResourceId = router.query.lectureResourceId;
+
     const { userId } = decode(getToken());
     setUserId(userId);
-    getMainData().then((result)=>setLectureInfo(result[1].title)).then(setLoading(false));
+    getMainData().then((result)=>setLectureInfo(result[getLectureId()-1].title)).then(setLoading(false));
   },[]);
+
 
 
   function HeaderDefault(){
@@ -40,7 +60,7 @@ function LectureViewHeader(){
         학생: default</span>
       <button
       className={style.closeButton}
-      onClick={windowClose}>
+      onClick={patchAttendanceSec}>
       </button>
       </h1>
       </div>
@@ -58,7 +78,7 @@ function LectureViewHeader(){
         학생: {userId}</span>
         <button
         className={style.closeButton}
-        onClick={windowClose}>
+        onClick={patchAttendanceSec}>
         </button>
       </h1>
     </div>
@@ -82,12 +102,13 @@ function LectureViewerMain(){
   const [lectureURL,setLectureURL] = useState("");
   const [loading,setLoading] = useState(true);
   const router = useRouter();
-
+  const [lectureResourceId,setLectureResourceId] = useState("");
   const getCurrentTime = (event)=>{
     setCurrentTime(event.target.currentTime);
   }
   const videoRef = useRef(null);
   const textRef = useRef(null);
+
 
   useEffect(()=>{
     if(!validate()) {
@@ -100,10 +121,14 @@ function LectureViewerMain(){
   useEffect(() => {
     const lectureResourceId = router.query.lectureResourceId;
     if(!lectureResourceId){
+      router.push("/"); 
       return;
-    }
-    getLectureResource(lectureResourceId).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
-  }, [router.query.lectureResourceId]);
+    }   
+    setLectureResourceId(lectureResourceId);
+    getLectureResource(lectureResourceId).then((response)=>{
+      setLectureURL(response[0].url)})
+      .then(setLoading(false));
+  },[])
 
   const onClick = ()=>{
     const bookmarkContainer = {
@@ -118,7 +143,7 @@ function LectureViewerMain(){
   const postBookmark = ()=>{
     for(let i = 0 ; i < bookmark.length ; i++){
       const {bookmarkSec,content} = bookmark[i];
-      CreateBookmark(2,bookmarkSec,content);
+      CreateBookmark(lectureResourceId,bookmarkSec,content);
     }
   }
 

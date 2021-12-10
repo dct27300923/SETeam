@@ -3,16 +3,6 @@ import styles from "../../styles/LectureUploadComponent.module.css";
 import {uploadLecture} from "../../utils/api-tools";
 import {useState} from 'react';
 
-function onFileUpload(event)
-{
-    event.preventDefault();
-    let file = event.target.files[0];
-    let formData = new FormData();
-    formData.append('video', file);
-    uploadLecture(1, formData, "Hello");
-}
-
-
 export default function LectureUploadComponent()
 {
     let outline = <div className={styles.outline}>강의 업로드</div>
@@ -36,8 +26,10 @@ export default function LectureUploadComponent()
     let uploadBtn = <button className={styles.uploadBtn} 
     onClick={function(e){
         let s = document.getElementById("week");
+        let t = document.getElementById("subject");
         // 몇주차 강의인지
         let week = s.options[s.selectedIndex].value;
+        let lectureId = t.options[t.selectedIndex].value;
         // 영상 몇개를 넣을건지
         let titleElements = document.getElementsByClassName("LectureUploadComponent_title__4v82a");
         let fileElements = document.getElementsByClassName("LectureUploadComponent_fileBtn__QOWrk");
@@ -52,7 +44,7 @@ export default function LectureUploadComponent()
                 console.log(video.duration);
             }
             video.src = URL.createObjectURL(file);
-           /* promises.push(uploadLecture(week, file, title));*/
+            promises.push(uploadLecture(lectureId, week, file, title));
         }
         Promise.all(promises).then(function(values) {
             console.log(values);
@@ -75,15 +67,15 @@ export default function LectureUploadComponent()
                 <option value="5">5주차</option>
                 <option value="6">6주차</option>
                 <option value="7">7주차</option>
-                <option value="1">8주차</option>
-                <option value="2">9주차</option>
-                <option value="3">10주차</option>
-                <option value="4">11주차</option>
-                <option value="5">12주차</option>
-                <option value="6">13주차</option>
-                <option value="7">14주차</option>
-                <option value="1">15주차</option>
-                <option value="2">16주차</option>
+                <option value="8">8주차</option>
+                <option value="9">9주차</option>
+                <option value="10">10주차</option>
+                <option value="11">11주차</option>
+                <option value="12">12주차</option>
+                <option value="13">13주차</option>
+                <option value="14">14주차</option>
+                <option value="15">15주차</option>
+                <option value="16">16주차</option>
             </select>
             <select name="subject" id="subject">
                 <option value="1">인공지능</option>
