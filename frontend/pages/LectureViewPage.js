@@ -13,7 +13,7 @@ function LectureViewHeader(){
   //api 수정이 필요한거 같습니다
   function patchAttendanceSec(){
 
-    PatchLectureResource(26).then(response=>{
+    PatchLectureResource(26, 10).then(response=>{
       console.log(response);
     });
     const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
@@ -110,15 +110,30 @@ function LectureViewerMain(){
   }
   const videoRef = useRef(null);
   const textRef = useRef(null);
+  const timerRef = useRef(0);
 
+  useEffect(() => {
+    // timer
+    const interval = setInterval(() => {
+      timerRef.current = timerRef.current += 1;
+      console.log(timerRef.current);
+    }, 1000);
 
-  useEffect(()=>{
-    if(!validate()) {
-      router.push("/login");
-      return;
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
+      const submitAnswer = window.confirm(message);
+      if(submitAnswer){
+        alert("current Time : ", timerRef.current);
+        window.history.back();
+      }else{
+        return;
+      }
     }
-
-  },[])
+  }, []);
 
   useEffect(() => {
     const lectureResourceId = router.query.lectureResourceId;
