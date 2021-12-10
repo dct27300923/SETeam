@@ -10,22 +10,7 @@ import CommonHead from "../components/CommonHead";
 //Header 
 function LectureViewHeader(){
 
-  //api 수정이 필요한거 같습니다
-  function patchAttendanceSec(){
-
-    PatchLectureResource(26, 10).then(response=>{
-      console.log(response);
-    });
-    const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
-    const submitAnswer = window.confirm(message);
-    if(submitAnswer){
-      window.history.back();
-    }else{
-      return;
-    }
-  }
-
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
   const [loading,setLoading] = useState(true);
   const [lectureInfo,setLectureInfo] = useState([]);
   const router = useRouter();
@@ -105,21 +90,8 @@ function LectureViewerMain(){
   
   const videoRef = useRef(null);
   const textRef = useRef(null);
-  const timerRef = useRef(0);
 
-  useEffect(() => {
-    // timer
-    const interval = setInterval(() => {
-      timerRef.current = timerRef.current += 1;
-      if(timerRef.current % 5 === 0) {
-        PatchLectureResource(26, 10).then(response=>{
-          console.log("attend at " + timerRef.current);
-        });
-      }
-    }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
 
   //attendanceSec patch 
   function patchAttendanceSec(){
@@ -129,15 +101,12 @@ function LectureViewerMain(){
       window.open('','_self');
       window.close();
   }
-    const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
-    const submitAnswer = window.confirm(message);
+    
+    PatchLectureResource(resourceId,currentTime)
+    .then(alert("시청시간이 반영 됩니다."))
+    .then(()=>{{;
+      windowClose()}});
 
-    if(submitAnswer){
-      PatchLectureResource(resourceId,currentTime);
-      windowClose();
-    }else{
-      return;
-    }
   }
 
   useEffect(()=>{
