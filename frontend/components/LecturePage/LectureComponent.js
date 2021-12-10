@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css, jsx }from '@emotion/react';
 import OutlineComponent from "./OutlineComponent.js";
 import ContainerComponent from "../ContainerComponent.js";
 import styles from "../../styles/LectureComponent.module.css";

@@ -1,7 +1,8 @@
+/** @jsxImportSource @emotion/react */
+import { css, jsx }from '@emotion/react';
 import LectureComponent from "../components/LecturePage/LectureComponent.js";
 import {useRouter} from 'next/router';
 import Layout from '../components/Layout';
-import { css, jsx }from '@emotion/react';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { API } from "../utils/api.js";

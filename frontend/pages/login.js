@@ -50,7 +50,7 @@ export default function Login() {
         justify-content: center;
         width: 520px;
         height: 600px;
-        margin: 0 auto;
+        margin: 20px auto;
         margin-top: 100px;
         background-color: #fff;
         border-radius: 10px;

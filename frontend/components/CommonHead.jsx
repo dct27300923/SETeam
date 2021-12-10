@@ -1,10 +1,11 @@
+import { Global } from '@emotion/react';
 import Head from 'next/head';
 
 const CommonHead = ({ children }) => (
 	<>
 		<Head>
 			<link rel="stylesheet" href="/css/sb-admin-2.css" />
-			<script async src="/js/sb-admin-2.js"></script>
+			<title>소프트웨어공학 온라인 강의실 시스템</title>
 			<link
 				rel="stylesheet"
 				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
@@ -16,4 +17,4 @@ const CommonHead = ({ children }) => (
 	</>
 );
 
-export default CommonHead;
+export default CommonHead;	

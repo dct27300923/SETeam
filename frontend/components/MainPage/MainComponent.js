@@ -37,9 +37,9 @@ function MainComponent(props)
             }}
         >
             <a>
-                <div className={styles.content}>
-                    {name}
-                    {/* {status} */}
+                <div className="card shadow mb-4">
+                    <div className="card-header text-primary">{name}</div>
+                    <div className="card-body">{/* {status} */}</div>
                 </div>
             </a>
         </Link>

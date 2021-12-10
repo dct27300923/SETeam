@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css, jsx }from '@emotion/react';
 import { useState,useEffect,useRef} from "react";
 import { useRouter } from 'next/router';
 import style from '../styles/LectureViewPage.module.css';
@@ -179,7 +181,13 @@ function LectureViewerMain(){
         placeholder="bookmark description"/>
       </div>
       </div>
-      <div>
+      <div css={css`
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      `}>
       <button id={style.bookmarkButton} className="btn btn-primary btn-icon-split"
               onClick={onClick}>
                 <span className="icon text-white-50">
