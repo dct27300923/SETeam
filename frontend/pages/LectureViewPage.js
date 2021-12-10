@@ -101,12 +101,15 @@ function LectureViewerMain(){
       window.open('','_self');
       window.close();
   }
-    
-    PatchLectureResource(resourceId,currentTime)
-    .then(alert("시청시간이 반영 됩니다."))
-    .then(()=>{{;
-      windowClose()}});
-
+    if(currentTime>=15){
+      PatchLectureResource(resourceId,currentTime)
+      .then(alert("시청시간이 반영 됩니다."))
+      .then(()=>{{;
+        windowClose()}});
+    }else{
+      alert("시청시간이 반영 됩니다.");
+      windowClose();
+    }
   }
 
   useEffect(()=>{
