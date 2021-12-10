@@ -7,7 +7,7 @@ import {CreateBookmark, getLectureResource, getMainData, PatchLectureResource} f
 import { getToken, validate, decode } from "../utils/token";
 import CommonHead from "../components/CommonHead";
 
-//header
+//Header 
 function LectureViewHeader(){
 
   //api 수정이 필요한거 같습니다
@@ -29,8 +29,9 @@ function LectureViewHeader(){
   const [loading,setLoading] = useState(true);
   const [lectureInfo,setLectureInfo] = useState([]);
   const router = useRouter();
-  
-  //url에서lectureid 받아오고 > 강의정보 받아오기
+
+
+//get lectureId from currentURL
   const getLectureId = ()=>{
     const url = window.location.search;
     for(let i = 0 ; i<url.length;i++){
@@ -39,12 +40,13 @@ function LectureViewHeader(){
       }
     }
   }
+//get lecture data using getMainData()
   useEffect(()=>{
     if(!validate()) {
       router.push("/login");
       return;
     }
-    const lectureResourceId = router.query.lectureResourceId;
+
 
     const { userId } = decode(getToken());
     setUserId(userId);
@@ -52,7 +54,7 @@ function LectureViewHeader(){
   },[]);
 
 
-
+//default header
   function HeaderDefault(){
     return(
       <div>
@@ -60,16 +62,12 @@ function LectureViewHeader(){
       <span className={style.playtime}>00:00</span>
       <span className={style.progressMessage}>
         학생: default</span>
-      <button
-      className={style.closeButton}
-      onClick={patchAttendanceSec}>
-      </button>
       </h1>
       </div>
 
     )
   }
-
+//header after loading
   function HeaderAfterLoading(){
 
     return(
@@ -78,10 +76,6 @@ function LectureViewHeader(){
         <span className={style.playtime}>01:00</span>
         <span className={style.progressMessage}>
         학생: {userId}</span>
-        <button
-        className={style.closeButton}
-        onClick={patchAttendanceSec}>
-        </button>
       </h1>
     </div>
     )
@@ -94,7 +88,7 @@ function LectureViewHeader(){
   );
 }
 
-
+//main
 function LectureViewerMain(){
 
   const [description,setDescription] = useState("");
@@ -103,11 +97,12 @@ function LectureViewerMain(){
   const [currentTime,setCurrentTime] = useState("");
   const [lectureURL,setLectureURL] = useState("");
   const [loading,setLoading] = useState(true);
+  const [resourceId,setResourceId] = useState("");
   const router = useRouter();
-  const [lectureResourceId,setLectureResourceId] = useState("");
   const getCurrentTime = (event)=>{
     setCurrentTime(event.target.currentTime);
   }
+  
   const videoRef = useRef(null);
   const textRef = useRef(null);
   const timerRef = useRef(0);
@@ -116,34 +111,54 @@ function LectureViewerMain(){
     // timer
     const interval = setInterval(() => {
       timerRef.current = timerRef.current += 1;
-      console.log(timerRef.current);
+      if(timerRef.current % 5 === 0) {
+        PatchLectureResource(26, 10).then(response=>{
+          console.log("attend at " + timerRef.current);
+        });
+      }
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    window.onbeforeunload = () => {
-      const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
-      const submitAnswer = window.confirm(message);
-      if(submitAnswer){
-        alert("current Time : ", timerRef.current);
-        window.history.back();
-      }else{
-        return;
-      }
+  //attendanceSec patch 
+  function patchAttendanceSec(){
+
+    function windowClose(){
+      window.opener=null;
+      window.open('','_self');
+      window.close();
+  }
+    const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
+    const submitAnswer = window.confirm(message);
+
+
+    if(submitAnswer){
+      PatchLectureResource(resourceId,currentTime);
+      windowClose();
+    }else{
+      return;
     }
-  }, []);
+  }
+
+  useEffect(()=>{
+    if(!validate()) {
+      router.push("/login");
+      return;
+    }
+  },[])
 
   useEffect(() => {
     const lectureResourceId = router.query.lectureResourceId;
+    setResourceId(lectureResourceId);
     if(!lectureResourceId){
       return;
     }
     getLectureResource(lectureResourceId).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
   }, [router.query.lectureResourceId]);
 
-  const onClick = ()=>{
+//make bookmark function
+  const makeBookMark = ()=>{
     const bookmarkContainer = {
       "bookmarkSec":currentTime,
       "content":description,
@@ -153,13 +168,16 @@ function LectureViewerMain(){
     setBookmark((currentArray)=>[bookmarkContainer, ... currentArray]);
   }
 
+//post bookmark function
   const postBookmark = ()=>{
     for(let i = 0 ; i < bookmark.length ; i++){
       const {bookmarkSec,content} = bookmark[i];
-      CreateBookmark(lectureResourceId,bookmarkSec,content);
+      CreateBookmark(resourceId,bookmarkSec,content);
+
     }
   }
 
+//bookmark timejump function
   const timeJump = (event)=>{
     const bookmarkTime = event.target.title;
     videoRef.current.currentTime = bookmarkTime;
@@ -173,7 +191,6 @@ function LectureViewerMain(){
         ref ={videoRef}
         src={loading ? null : lectureURL}
         controls
-        muted
         width="100%"
         height="100%"
         onTimeUpdate={getCurrentTime}
@@ -200,7 +217,7 @@ function LectureViewerMain(){
         justify-content: center;
       `}>
       <button id={style.bookmarkButton} className="btn btn-primary btn-icon-split"
-              onClick={onClick}>
+              onClick={makeBookMark}>
                 <span className="icon text-white-50">
                   <i className="fas fa-bookmark"></i>
                 </span>
@@ -211,7 +228,10 @@ function LectureViewerMain(){
                 <span className="icon text-white-50">
                 <i className="fas fa-arrow-right"></i></span>
               <span className="text">북마크 전송</span>
-        </button>      
+        </button>
+        <button
+      onClick={patchAttendanceSec}>강의종료
+      </button>      
       </div>
       <hr/>
       <ol>
@@ -224,7 +244,7 @@ function LectureViewerMain(){
   )
 }
 
-
+//footer
 function LectureViewerFooter(){
   return(
     <div id={style.lectureViewerFooter}>
