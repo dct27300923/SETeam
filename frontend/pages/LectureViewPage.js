@@ -59,9 +59,9 @@ function LectureViewHeader(){
     return(
       <div>
       <h1>강의정보를 불러오는 중입니다.
-      <span className={style.playtime}>00:00</span>
+      <span className={style.playtime}>학생</span>
       <span className={style.progressMessage}>
-        학생: default</span>
+        학번: default</span>
       </h1>
       </div>
 
@@ -73,9 +73,9 @@ function LectureViewHeader(){
     return(
       <div>
       <h1>{lectureInfo}
-        <span className={style.playtime}>01:00</span>
+        <span className={style.playtime}>학생</span>
         <span className={style.progressMessage}>
-        학생: {userId}</span>
+        학번: {userId}</span>
       </h1>
     </div>
     )
@@ -132,7 +132,6 @@ function LectureViewerMain(){
     const message = "종료버튼을 누르면 시청시간이 반영 됩니다";
     const submitAnswer = window.confirm(message);
 
-
     if(submitAnswer){
       PatchLectureResource(resourceId,currentTime);
       windowClose();
@@ -157,6 +156,7 @@ function LectureViewerMain(){
     getLectureResource(lectureResourceId).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
   }, [router.query.lectureResourceId]);
 
+
 //make bookmark function
   const makeBookMark = ()=>{
     const bookmarkContainer = {
@@ -173,7 +173,6 @@ function LectureViewerMain(){
     for(let i = 0 ; i < bookmark.length ; i++){
       const {bookmarkSec,content} = bookmark[i];
       CreateBookmark(resourceId,bookmarkSec,content);
-
     }
   }
 
