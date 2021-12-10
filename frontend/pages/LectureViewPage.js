@@ -144,7 +144,7 @@ function LectureViewerMain(){
   const postBookmark = ()=>{
     for(let i = 0 ; i < bookmark.length ; i++){
       const {bookmarkSec,content} = bookmark[i];
-      CreateBookmark(resourceId,bookmarkSec,content);
+      CreateBookmark(resourceId,bookmarkSec,content).then(alert("북마크 전송이 완료되었습니다."));
     }
   }
 
@@ -219,7 +219,7 @@ function LectureViewerMain(){
 function LectureViewerFooter(){
   return(
     <div id={style.lectureViewerFooter}>
-      <div className={style.progressDate}>출석인정기간입니다.</div>
+      <div className={style.progressDate}>출석 인정 기간입니다. </div>
     </div>
   )
 }
