@@ -123,14 +123,10 @@ function LectureViewerMain(){
   useEffect(() => {
     const lectureResourceId = router.query.lectureResourceId;
     if(!lectureResourceId){
-      router.push("/"); 
       return;
-    }   
-    setLectureResourceId(lectureResourceId);
-    getLectureResource(lectureResourceId).then((response)=>{
-      setLectureURL(response[0].url)})
-      .then(setLoading(false));
-  },[])
+    }
+    getLectureResource(lectureResourceId).then((response)=>setLectureURL(response[0].url)).then(setLoading(false));
+  }, [router.query.lectureResourceId]);
 
   const onClick = ()=>{
     const bookmarkContainer = {
