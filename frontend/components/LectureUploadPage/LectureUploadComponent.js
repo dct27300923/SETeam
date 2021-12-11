@@ -54,8 +54,7 @@ export default function LectureUploadComponent()
         Promise.all(promises).then(function(values) {
             console.log(values);
         });
-        //alert(week);
-        //alert(count);
+        alert("강의가 업로드 되었습니다.");
     }.bind(this)}>업로드</button>
     buttons = <div className={styles.buttons}>
         {addBtn}
